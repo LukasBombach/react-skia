@@ -10,6 +10,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "bitflags"
+version = "1.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
+
+[[package]]
 name = "cc"
 version = "1.0.58"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -32,6 +38,12 @@ name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
+
+[[package]]
+name = "libc"
+version = "0.2.72"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a9f8082297d534141b30c8d39e9b1773713ab50fdbe4ff30f750d063b3bfd701"
 
 [[package]]
 name = "memchr"
@@ -87,6 +99,7 @@ version = "0.1.0"
 dependencies = [
  "neon",
  "neon-build",
+ "sdl2",
 ]
 
 [[package]]
@@ -106,6 +119,29 @@ name = "regex-syntax"
 version = "0.6.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "26412eb97c6b088a6997e05f69403a802a92d520de2f8e63c2b65f9e0f47c4e8"
+
+[[package]]
+name = "sdl2"
+version = "0.34.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "29fb006600d16da4f1f1e5c7b398f44af2f1b476ff5f2e555651bd78cf4c18d8"
+dependencies = [
+ "bitflags",
+ "lazy_static",
+ "libc",
+ "sdl2-sys",
+]
+
+[[package]]
+name = "sdl2-sys"
+version = "0.34.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3ed17d6d46b62b7df12134513bcc4f071268963e8c9bc8bf7ad983fbfb2bc3cc"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "version-compare",
+]
 
 [[package]]
 name = "semver"
@@ -130,3 +166,9 @@ checksum = "d40c6d1b69745a6ec6fb1ca717914848da4b44ae29d9b3080cbee91d72a69b14"
 dependencies = [
  "lazy_static",
 ]
+
+[[package]]
+name = "version-compare"
+version = "0.0.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d63556a25bae6ea31b52e640d7c41d1ab27faba4ccb600013837a3d0b3994ca1"
