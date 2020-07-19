@@ -1,9 +1,15 @@
 #[macro_use]
 extern crate neon;
-extern crate sdl2;
 
-use neon::context::Context;
-use neon::types::JsUndefined;
+// use std::thread;
+
+use winit::{
+    event::{Event, WindowEvent},
+    event_loop::{ControlFlow, EventLoop},
+    window::WindowBuilder,
+};
+
+// use neon::types::JsUndefined;
 
 pub struct Canvas();
 
@@ -13,30 +19,40 @@ declare_types! {
             Ok(Canvas())
         }
 
-        method open(mut cx) {
-            let sdl_context = sdl2::init()
-            .or_else(|err| cx.throw_error(err.to_string()))?;
+        method open(mut _cx) {
+            //thread::spawn(move || {
+            //println!("rust: spawned a thread");
 
-            let video_subsystem = sdl_context.video()
-                .or_else(|err| cx.throw_error(err.to_string()))?;
+            let event_loop = EventLoop::new();
+            let window = WindowBuilder::new().build(&event_loop).unwrap();
+            println!("rust: post window");
 
-            let _window = video_subsystem
-                .window("Game", 900, 700)
-                .resizable()
-                .build()
-                .or_else(|err| cx.throw_error(err.to_string()))?;
+            event_loop.run(move |event, _, control_flow| {
+                *control_flow = ControlFlow::Poll;
+                *control_flow = ControlFlow::Wait;
 
-            let mut event_pump = sdl_context.event_pump().or_else(|err| cx.throw_error(err.to_string()))?;
-            'main: loop {
-                for event in event_pump.poll_iter() {
-                    match event {
-                        sdl2::event::Event::Quit { .. } => break 'main,
-                        _ => {}
-                    }
+                match event {
+                    Event::WindowEvent {
+                        event: WindowEvent::CloseRequested,
+                        ..
+                    } => {
+                        println!("The close button was pressed; stopping");
+                        *control_flow = ControlFlow::Exit
+                    },
+                    Event::MainEventsCleared => {
+                        window.request_redraw();
+                    },
+                    Event::RedrawRequested(_) => {
+                    },
+                    _ => ()
                 }
-                // render window contents here
-            }
-            Ok(JsUndefined::new().upcast())
+            });
+
+            //});
+            // // some work here
+            // let _res = child.join();
+            //Ok(JsUndefined::new().upcast())
+
         }
     }
 }

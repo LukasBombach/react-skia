@@ -17,3 +17,5 @@ neon-build = "0.4.0"
 [dependencies]
 neon = "0.4.0"
 sdl2 = "0.34.2"
+skulpin = "0.9.5"
+winit = "0.22.2"
